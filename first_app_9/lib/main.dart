@@ -1,13 +1,22 @@
+import 'package:camera/camera.dart';
+import 'package:first_app_9/screens/taken_picture_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
-void main()  {
+
+Future <void> main() async  {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const SqliteApp());
+
+  final cameras = await availableCameras();
+  final first = cameras.first;
+
+  runApp(SqliteApp(firstCamera: first,));
 }
 
 class SqliteApp extends StatelessWidget {
-  const SqliteApp({Key? key}) : super(key: key);
+  final CameraDescription firstCamera;
+
+  const SqliteApp({Key? key, required this.firstCamera}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +25,7 @@ class SqliteApp extends StatelessWidget {
       title: 'SQLite Example',
       initialRoute: 'home',
       routes: {
-        'home':(context) => const HomeScreen()
+        'home':(context) => HomeScreen(firstCamera: firstCamera,)
       },
       theme: ThemeData.light().copyWith(
         appBarTheme: const AppBarTheme(

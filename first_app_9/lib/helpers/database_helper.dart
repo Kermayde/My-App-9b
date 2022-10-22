@@ -27,10 +27,22 @@ class DatabaseHelper{
       '''
     );
   }
+
   Future<int>add(Cat cat) async {
     Database db = await instance.database;
     return await db.insert('cats', cat.toMap());
   }
+
+  Future<int>delete(int id)async{
+    Database db = await instance.database;
+    return await db.delete('cats',where: 'id=?', whereArgs: [id]);
+  }
+
+  Future<int>update(Cat cat) async {
+    Database db = await instance.database;
+    return await db.update('cats', cat.toMap(), where: 'id = ?', whereArgs: [cat.id]);
+  }
+
   Future<List<Cat>>getCats() async {
     Database db = await instance.database;
     var cats = await db.query('cats', orderBy: 'race');
