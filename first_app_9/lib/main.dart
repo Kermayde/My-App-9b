@@ -27,11 +27,11 @@ class SqliteApp extends StatelessWidget {
       title: 'SQLite Example',
       initialRoute: 'home',
       routes: {
-        'home':(context) => HomePageWidget(firstCamera: firstCamera)
+        'home':(context) => HomePageWidget(firstCamera: firstCamera,)
       },
       theme: ThemeData.light().copyWith(
         appBarTheme: const AppBarTheme(
-          color: Color(0xFFE8D4B9)
+          color: Color(0xFF38004D)
         )
       ),
     );

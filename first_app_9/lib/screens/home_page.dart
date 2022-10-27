@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:first_app_9/screens/details_page.dart';
 import 'package:first_app_9/screens/home_screen.dart';
+import 'package:first_app_9/screens/taken_picture_screen.dart';
 import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -316,7 +317,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
 
-                      builder: (context) => HomeScreen(firstCamera: widget.firstCamera)
+                      builder: (context) => TakenPictureScreen(camera: widget.firstCamera,)
                     ),
                   );
                 },

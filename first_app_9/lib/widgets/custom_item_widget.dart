@@ -4,9 +4,9 @@ import '../helpers/database_helper.dart';
 import '../models/cat_model.dart';
 
 class CustomItem extends StatefulWidget {
-  final Cat cat;
+  final Planet planet;
 
-  const CustomItem({Key?key, required this.cat}) :super(key: key);
+  const CustomItem({Key?key, required this.planet}) :super(key: key);
 
   @override
   State<CustomItem> createState() => _CustomItemState();
@@ -16,11 +16,11 @@ class _CustomItemState extends State<CustomItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('Name:${widget.cat.name},| Race:${widget.cat.race}'),
+      title: Text('Name:${widget.planet.Name},| Description:${widget.planet.Description}| Type:${widget.planet.Type},| Nature:${widget.planet.Nature},| Size:${widget.planet.Size},| Distance:${widget.planet.Distance}'),
       onLongPress: (){
         
         setState(() {
-          DatabaseHelper.instance.delete(widget.cat.id!);
+          DatabaseHelper.instance.delete(widget.planet.id!);
         });
       },
     );

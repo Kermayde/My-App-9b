@@ -69,9 +69,9 @@ class _TakenPictureScreenState extends State<TakenPictureScreen> {
 
             await Navigator.of(context).push(
               MaterialPageRoute(
-                builder:(context)=>ResultScreen(
-                  imagePhath:image.path,
-                  camera: widget.camera,
+                builder:(context)=>HomeScreen(
+                  ImagePhath:image.path,
+                  firstCamera: widget.camera,
                 )
               )
             );
@@ -87,45 +87,3 @@ class _TakenPictureScreenState extends State<TakenPictureScreen> {
 }
 
 
-class ResultScreen extends StatelessWidget {
-  final String imagePhath;
-  final CameraDescription camera;
-
-  const ResultScreen({Key? key, required this.imagePhath, required this.camera}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Display the picture')),
-      body: Center(
-        child: Column(
-          children: [
-            Image.file(File(imagePhath)),
-            GestureDetector(
-              onTap:() {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(
-                      firstCamera: camera
-                    )
-                  )
-                );
-              },
-              child: Container(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                margin: EdgeInsets.only(top: 30),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  color: Colors.black
-                ),
-                child: const Text("Next",
-                  style: TextStyle(color: Colors.amber),
-                ),
-              ),
-            )
-          ]
-        ),
-      )
-    );
-  }
-}

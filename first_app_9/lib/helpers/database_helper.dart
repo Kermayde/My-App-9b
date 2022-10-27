@@ -19,37 +19,42 @@ class DatabaseHelper{
   Future _onCreate(Database db, int version) async{
     db.execute(
       '''
-      CREATE TABLE cats(
+      CREATE TABLE planets(
         id INTEGER PRIMARY KEY,
-        race TEXT,
-        name TEXT
+        Description TEXT,
+        Type TEXT,
+        Nature TEXT,
+        Size TEXT,
+        Distance TEXT,
+        Image TEXT,
+        Name TEXT
       )
       '''
     );
   }
 
-  Future<int>add(Cat cat) async {
+  Future<int>add(Planet planet) async {
     Database db = await instance.database;
-    return await db.insert('cats', cat.toMap());
+    return await db.insert('planets', planet.toMap());
   }
 
   Future<int>delete(int id)async{
     Database db = await instance.database;
-    return await db.delete('cats',where: 'id=?', whereArgs: [id]);
+    return await db.delete('planets',where: 'id=?', whereArgs: [id]);
   }
 
-  Future<int>update(Cat cat) async {
+  Future<int>update(Planet planet) async {
     Database db = await instance.database;
-    return await db.update('cats', cat.toMap(), where: 'id = ?', whereArgs: [cat.id]);
+    return await db.update('planets', planet.toMap(), where: 'id = ?', whereArgs: [planet.id]);
   }
 
-  Future<List<Cat>>getCats() async {
+  Future<List<Planet>>getPlanets() async {
     Database db = await instance.database;
-    var cats = await db.query('cats', orderBy: 'race');
+    var planets = await db.query('planets', orderBy: 'Description');
     
-    List<Cat>catsList = 
-      cats.isNotEmpty? cats.map((e) => Cat.formMap(e)).toList():[];
-    return catsList;
+    List<Planet>planetsList = 
+      planets.isNotEmpty? planets.map((e) => Planet.formMap(e)).toList():[];
+    return planetsList;
 
   }
 }
