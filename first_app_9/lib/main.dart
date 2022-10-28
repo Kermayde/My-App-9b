@@ -1,5 +1,4 @@
 import 'package:camera/camera.dart';
-import 'package:first_app_9/models/cat_model.dart';
 import 'package:first_app_9/screens/details_page.dart';
 import 'package:first_app_9/screens/home_page.dart';
 import 'package:first_app_9/screens/taken_picture_screen.dart';
@@ -28,7 +27,7 @@ class SqliteApp extends StatelessWidget {
       title: 'SQLite Example',
       initialRoute: 'home',
       routes: {
-        'home':(context) => HomePageWidget(firstCamera: firstCamera)
+        'home':(context) => HomePageWidget(firstCamera: firstCamera,)
       },
       theme: ThemeData.light().copyWith(
         appBarTheme: const AppBarTheme(
