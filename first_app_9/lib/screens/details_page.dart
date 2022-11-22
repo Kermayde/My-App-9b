@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:first_app_9/screens/home_page.dart';
+import 'package:first_app_9/widgets/image_provider.dart';
 import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -7,8 +8,16 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailsScreenWidget extends StatefulWidget {
+  final String Description;
+  final String Type;
+  final String Nature;
+  final String Size;
+  final String Distance;
+  final String Image;
+  final String Name;
   final CameraDescription firstCamera;
-  const DetailsScreenWidget({Key? key, required this.firstCamera}) : super(key: key);
+
+  const DetailsScreenWidget({Key? key, required this.firstCamera, required this.Description, required this.Type, required this.Nature, required this.Size, required this.Distance, required this.Image, required this.Name}) : super(key: key);
 
   @override
   _DetailsScreenWidgetState createState() => _DetailsScreenWidgetState();
@@ -51,12 +60,8 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                         topLeft: Radius.circular(0),
                         topRight: Radius.circular(0),
                       ),
-                      child: Image.network(
-                        'https://noirlab.edu/public/media/archives/images/screen/noirlab2116c.jpg',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
+                      child: Container(child: Image_s(path: widget.Image), width: 100,height: 100, )
+                      
                     ),
                   ),
                   Row(
@@ -110,7 +115,7 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Jupiter',
+                      widget.Name,
                       style: FlutterFlowTheme.of(context).title1.override(
                             fontFamily: 'Poppins',
                             color: Color(0xFF3F2D1C),
@@ -138,7 +143,7 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
-                        'Planet',
+                        widget.Type,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
@@ -157,7 +162,7 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
-                        '142.569 km',
+                        widget.Size,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
@@ -185,7 +190,7 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
-                        'Gas',
+                        widget.Nature,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
@@ -209,7 +214,7 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
-                        '588 million km',
+                        widget.Distance,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
@@ -241,7 +246,7 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(7, 7, 7, 7),
                     child: Text(
-                      'It is the largest planet in the solar system and the fifth in order of distance from the Sun.',
+                      widget.Description,
                       style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ),

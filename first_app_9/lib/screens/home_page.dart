@@ -1,16 +1,24 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:first_app_9/helpers/database_helper.dart';
 import 'package:first_app_9/screens/details_page.dart';
 import 'package:first_app_9/screens/home_screen.dart';
 import 'package:first_app_9/screens/taken_picture_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:first_app_9/widgets/image_provider.dart';
+import 'package:path_provider/path_provider.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../models/cat_model.dart';
+
 class HomePageWidget extends StatefulWidget {
   final CameraDescription firstCamera;
+  
   const HomePageWidget({Key? key, required this.firstCamera}) : super(key: key);
   
   @override
@@ -19,6 +27,7 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +88,74 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                 ],
               ),
+
+
+              Expanded(
+                //padding: EdgeInsetsDirectional.fromSTEB(0, 0, 30, 5),
+                child: (FutureBuilder<List<Planet>>(
+                  future: DatabaseHelper.instance.getPlanets(),
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<List<Planet>> snapshot
+                    ){
+                      if(!snapshot.hasData){
+                        return Center(
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: const Text("Loading"),
+                          ),);
+                      }
+                      else{
+                            return snapshot.data!.isEmpty ?
+                            Center(
+                              child: Container(
+                                child: const Text("No celestial bodys")
+                                ),
+                            )
+
+                        :ListView(
+                          
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          
+                          children: snapshot.data!.map((planet) {
+                            return Center(
+                              child:GestureDetector(
+                                
+                                child: Container(
+                                  //decoration: BoxDecoration(shape: BoxShape.circle),                                  
+                                  child: Image_s(path: planet.Image), height: 325, width: 200, 
+                                  
+                                  
+                                ),
+                                onTap: (){
+                                  setState(() {
+                                    final route = MaterialPageRoute(builder: (context) => DetailsScreenWidget(
+                                      firstCamera: widget.firstCamera,
+                                      Description: planet.Description,
+                                      Image: planet.Image,
+                                      Distance: planet.Distance,
+                                      Name: planet.Name,
+                                      Nature: planet.Nature,
+                                      Size: planet.Size,
+                                      Type: planet.Type,
+                                      ));
+                                    Navigator.push(context, route);
+            
+                                  });
+                                },
+                              )
+                            );
+                          }).toList()
+                        );
+                    }
+                  }
+                )
+              ),
+              ),
+
+
+/* 
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 20, 0, 0),
                 child: Container(
@@ -87,7 +164,31 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   decoration: BoxDecoration(
                     color: Color(0xFFE8D4B9),
                   ),
-                  child: ListView(
+
+
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    itemBuilder: (_, int index) { 
+                      return Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                            'https://cdn.zmescience.com/wp-content/uploads/2019/08/jupi.jpg',
+                            width: 200,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        
+                      );
+                    },
+                  ),
+
+
+                  /* child: ListView(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     children: [
@@ -116,9 +217,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         ),
                       ),
                     ],
-                  ),
+                  ), */
+
+
+
                 ),
-              ),
+              ), */
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                 child: Row(
@@ -198,14 +302,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   decoration: BoxDecoration(
                     color: Color(0xFFE8D4B9),
                   ),
-                  child: ListView(
+
+
+
+
+
+
+
+                  child: ListView.builder(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      Padding(
+                    itemCount: 7,
+                    itemBuilder: (_, int index) { 
+                      return Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                         child: InkWell(
-                          onTap: () async {
+                          /* onTap: () async {
                             // Details S
 
                             //context.pushNamed('DetailsScreen');
@@ -215,7 +327,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 builder: (context) => DetailsScreenWidget(firstCamera: widget.firstCamera,)
                               ),
                             );
-                          },
+                          }, */
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -226,89 +338,31 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
-                                child: Image.network(
-                                  'https://noirlab.edu/public/media/archives/images/screen/noirlab2116c.jpg',
+                                child: Image.asset(
+                                  'assets/images/temp.png'
                                 ),
                               ),
                               Text(
-                                'Jupiter',
+                                'Jupiter 1',
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 120,
-                              height: 120,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.network(
-                                'https://apod.nasa.gov/apod/image/0410/titan_cassini_PIA06139.jpg',
-                              ),
-                            ),
-                            Text(
-                              'Titan',
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 120,
-                              height: 120,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.network(
-                                'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/stsci-h-p2043a-f-1592x1137-1595858283.png?crop=0.716xw:1.00xh;0.112xw,0&resize=640:*',
-                              ),
-                            ),
-                            Text(
-                              'Saturn',
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 120,
-                              height: 120,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.network(
-                                'https://m.media-amazon.com/images/I/51DnM64cd+L._AC_UF894,1000_QL80_.jpg',
-                              ),
-                            ),
-                            Text(
-                              'Kepler 22b',
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
+
+
+                    
+          
+
+
+
+
+                  
+
+                  
                 ),
               ),
               FFButtonWidget(

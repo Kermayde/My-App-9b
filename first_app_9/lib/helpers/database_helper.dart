@@ -1,15 +1,10 @@
-import 'package:first_app_9/helpers/database_helper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import '../models/cat_model.dart';
-import 'database_helper.dart';
 
-
-class DatabaseHelper {
+class DatabaseHelper{
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
@@ -59,10 +54,7 @@ class DatabaseHelper {
     
     List<Planet>planetsList = 
       planets.isNotEmpty? planets.map((e) => Planet.formMap(e)).toList():[];
-
-      
     return planetsList;
-    
 
   }
 }
